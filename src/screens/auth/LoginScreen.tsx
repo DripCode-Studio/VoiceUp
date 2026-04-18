@@ -7,13 +7,8 @@ import { PrimaryButton } from '../../components/PrimaryButton';
 import { useAuthStore } from '../../store/useAuthStore';
 import { COLORS, SPACING } from '../../utils/constants';
 
-type AuthStackParamList = {
-  Login: undefined;
-  Register: undefined;
-};
-
 export const LoginScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const login = useAuthStore(state => state.login);
   const isLoading = useAuthStore(state => state.isLoading);
   
@@ -27,6 +22,7 @@ export const LoginScreen = () => {
     }
     try {
       await login(email);
+      navigation.goBack();
     } catch (error: any) {
       Alert.alert('Login Failed', error.message || 'Unknown error occurred');
     }

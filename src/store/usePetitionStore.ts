@@ -7,7 +7,7 @@ interface PetitionState {
   signedPetitionIds: string[];
   isLoading: boolean;
   fetchPetitions: () => Promise<void>;
-  signPetition: (petitionId: string) => Promise<void>;
+  signPetition: (petitionId: string, guestName?: string, guestEmail?: string) => Promise<void>;
   createPetition: (title: string, description: string, goalSignatures: number) => Promise<void>;
 }
 
@@ -22,7 +22,7 @@ export const usePetitionStore = create<PetitionState>((set, get) => ({
     set({ petitions: MOCK_PETITIONS, isLoading: false });
   },
 
-  signPetition: async (petitionId: string) => {
+  signPetition: async (petitionId: string, guestName?: string, guestEmail?: string) => {
     const { signedPetitionIds, petitions } = get();
     if (signedPetitionIds.includes(petitionId)) {
       throw new Error('Already signed');

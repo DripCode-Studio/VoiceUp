@@ -1,5 +1,7 @@
 import React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Avatar } from '../../components/Avatar';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -7,12 +9,28 @@ import { usePetitionStore } from '../../store/usePetitionStore';
 import { COLORS, RADIUS, SPACING } from '../../utils/constants';
 
 export const ProfileScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const user = useAuthStore(state => state.user);
   const logout = useAuthStore(state => state.logout);
   const { petitions, signedPetitionIds } = usePetitionStore();
 
   const userPetitionsCreated = petitions.filter(p => p.authorId === user?.id).length;
   const userPetitionsSigned = signedPetitionIds.length;
+
+  if (!user) {
+    return (
+      <View style={styles.authContainer}>
+        <View style={styles.authPromptContent}>
+          <Text style={styles.authPromptTitle}>Profile Access</Text>
+          <Text style={styles.authPromptText}>Log in or sign up to view your petitions and profile details.</Text>
+          <PrimaryButton 
+            title="Log In / Sign Up" 
+            onPress={() => navigation.navigate('Login')}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -108,5 +126,27 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: 'auto',
+  },
+  authContainer: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+  authPromptContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: SPACING.xl,
+  },
+  authPromptTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginBottom: SPACING.sm,
+  },
+  authPromptText: {
+    fontSize: 16,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    marginBottom: SPACING.xl,
   },
 });

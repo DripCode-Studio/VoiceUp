@@ -7,6 +7,8 @@ import { HomeScreen } from '../screens/main/HomeScreen';
 import { PetitionDetailsScreen } from '../screens/main/PetitionDetailsScreen';
 import { CreatePetitionScreen } from '../screens/main/CreatePetitionScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
+import { LoginScreen } from '../screens/auth/LoginScreen';
+import { RegisterScreen } from '../screens/auth/RegisterScreen';
 
 import { COLORS } from '../utils/constants';
 
@@ -66,6 +68,8 @@ export const AppNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen name="PetitionDetails" component={PetitionDetailsScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };

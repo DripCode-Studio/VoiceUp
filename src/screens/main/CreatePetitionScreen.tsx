@@ -5,11 +5,13 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { InputField } from '../../components/InputField';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { Header } from '../../components/Header';
+import { useAuthStore } from '../../store/useAuthStore';
 import { usePetitionStore } from '../../store/usePetitionStore';
 import { COLORS, SPACING, RADIUS } from '../../utils/constants';
 
 export const CreatePetitionScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const user = useAuthStore(state => state.user);
   const { createPetition, isLoading } = usePetitionStore();
   
   const [title, setTitle] = useState('');
@@ -41,6 +43,24 @@ export const CreatePetitionScreen = () => {
       Alert.alert('Error', error.message);
     }
   };
+
+  if (!user) {
+    return (
+      <View style={styles.authContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>Start a Petition</Text>
+        </View>
+        <View style={styles.authPromptContent}>
+          <Text style={styles.authPromptTitle}>You need an account</Text>
+          <Text style={styles.authPromptText}>Log in or sign up to create and manage your petitions.</Text>
+          <PrimaryButton 
+            title="Log In / Sign Up" 
+            onPress={() => navigation.navigate('Login')}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView 
@@ -141,5 +161,27 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
     fontSize: 16,
     color: COLORS.text,
+  },
+  authContainer: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+  authPromptContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: SPACING.xl,
+  },
+  authPromptTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginBottom: SPACING.sm,
+  },
+  authPromptText: {
+    fontSize: 16,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    marginBottom: SPACING.xl,
   },
 });

@@ -1,9 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Header } from '../../components/Header';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { Avatar } from '../../components/Avatar';
+import { InputField } from '../../components/InputField';
+import { useAuthStore } from '../../store/useAuthStore';
 import { usePetitionStore } from '../../store/usePetitionStore';
 import { COLORS, SPACING, RADIUS } from '../../utils/constants';
 
@@ -16,8 +18,12 @@ export const PetitionDetailsScreen = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'PetitionDetails'>>();
   
   const petitionId = route.params.id;
+  const user = useAuthStore(state => state.user);
   const { petitions, signPetition, signedPetitionIds, isLoading } = usePetitionStore();
   
+  const [guestName, setGuestName] = useState('');
+  const [guestEmail, setGuestEmail] = useState('');
+
   const petition = petitions.find(p => p.id === petitionId);
   const hasSigned = signedPetitionIds.includes(petitionId);
 
@@ -30,8 +36,17 @@ export const PetitionDetailsScreen = () => {
   }
 
   const handleSign = async () => {
+    if (!user && (!guestName || !guestEmail)) {
+      Alert.alert('Required', 'Please provide your name and email to sign this petition.');
+      return;
+    }
+
     try {
-      await signPetition(petition.id);
+      if (user) {
+        await signPetition(petition.id);
+      } else {
+        await signPetition(petition.id, guestName, guestEmail);
+      }
       Alert.alert('Success', 'Thank you for signing this petition!');
     } catch (error: any) {
       Alert.alert('Notice', error.message);
@@ -65,6 +80,24 @@ export const PetitionDetailsScreen = () => {
             <View style={[styles.progressBarFill, { width: `${progress}%` }]} />
           </View>
           
+          {!user && !hasSigned && (
+            <View style={styles.guestForm}>
+              <Text style={styles.guestFormTitle}>Sign this petition</Text>
+              <InputField 
+                placeholder="Full Name" 
+                value={guestName} 
+                onChangeText={setGuestName} 
+              />
+              <InputField 
+                placeholder="Email Address" 
+                value={guestEmail} 
+                onChangeText={setGuestEmail} 
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+          )}
+
           <View style={styles.buttonContainer}>
              <PrimaryButton 
                title={hasSigned ? "You've Signed This" : "Sign this Petition"}
@@ -160,6 +193,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: SPACING.xs,
+  },
+  guestForm: {
+    marginBottom: SPACING.md,
+  },
+  guestFormTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.text,
+    marginBottom: SPACING.md,
   },
   contentSection: {
     marginBottom: SPACING.xl,

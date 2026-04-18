@@ -7,13 +7,8 @@ import { PrimaryButton } from '../../components/PrimaryButton';
 import { useAuthStore } from '../../store/useAuthStore';
 import { COLORS, SPACING } from '../../utils/constants';
 
-type AuthStackParamList = {
-  Login: undefined;
-  Register: undefined;
-};
-
 export const RegisterScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const register = useAuthStore(state => state.register);
   const isLoading = useAuthStore(state => state.isLoading);
   
@@ -28,6 +23,7 @@ export const RegisterScreen = () => {
     }
     try {
       await register(name, email);
+      navigation.goBack();
     } catch (error: any) {
       Alert.alert('Registration Failed', error.message || 'Unknown error occurred');
     }
