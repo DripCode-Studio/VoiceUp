@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, StyleSheet, Text, RefreshControl } from 'react-native';
+import { View, FlatList, StyleSheet, Text, RefreshControl, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { PetitionCard } from '../../components/PetitionCard';

@@ -31,7 +31,7 @@ export const CreatePetitionScreen = () => {
     try {
       await createPetition(title, description, goalNumber);
       Alert.alert('Success', 'Your petition has been published!', [
-        { text: 'OK', onPress: () => navigation.navigate('Home') }
+        { text: 'OK', onPress: () => navigation.navigate('HomeTab') }
       ]);
       // Reset form
       setTitle('');
