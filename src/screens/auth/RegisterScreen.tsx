@@ -1,132 +1,253 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { InputField } from '../../components/InputField';
-import { PrimaryButton } from '../../components/PrimaryButton';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TextInput, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  KeyboardAvoidingView, 
+  Platform 
+} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { COLORS } from '../../utils/constants';
 import { useAuthStore } from '../../store/useAuthStore';
-import { COLORS, SPACING } from '../../utils/constants';
 
 export const RegisterScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const register = useAuthStore(state => state.register);
-  const isLoading = useAuthStore(state => state.isLoading);
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const returnTo = route.params?.returnTo || 'HomeTab';
+
+  const { login } = useAuthStore();
   
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = async () => {
-    if (!name || !email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
-    }
-    try {
-      await register(name, email);
-      navigation.goBack();
-    } catch (error: any) {
-      Alert.alert('Registration Failed', error.message || 'Unknown error occurred');
+  const handleRegister = () => {
+    if (name && email && password) {
+      // Mock registration logic
+      login({ id: String(Date.now()), name, email });
+      if (returnTo === 'goBack') {
+        navigation.goBack();
+      } else {
+        navigation.navigate(returnTo);
+      }
+    } else {
+      alert('Please fill out all fields');
     }
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container} 
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join VoiceUp and start making a difference.</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <View style={styles.appBar}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
+          </TouchableOpacity>
+          <Text style={styles.appBarTitle}>Join the Movement</Text>
+          <View style={{width: 40}} />
         </View>
 
-        <View style={styles.form}>
-          <InputField
-            label="Full Name"
-            placeholder="Jane Doe"
-            value={name}
-            onChangeText={setName}
-            autoCapitalize="words"
-          />
+        <View style={styles.content}>
+          <View style={styles.brandBlock}>
+            <View style={styles.iconBox}>
+              <MaterialIcons name="record-voice-over" size={40} color={COLORS.primary} />
+            </View>
+            <Text style={styles.brandTitle}>Join the{"\n"}Movement</Text>
+            <Text style={styles.brandSubtitle}>Create an account to start and sign petitions.</Text>
+          </View>
 
-          <InputField
-            label="Email Address"
-            placeholder="jane@example.com"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          
-          <InputField
-            label="Password"
-            placeholder="••••••••"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.formContainer}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>FULL NAME</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Jane Doe"
+                placeholderTextColor={COLORS.outline}
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
 
-          <View style={styles.buttonContainer}>
-            <PrimaryButton 
-              title="Sign Up" 
-              onPress={handleRegister} 
-              loading={isLoading}
-            />
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>EMAIL ADDRESS</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="jane@example.com"
+                placeholderTextColor={COLORS.outline}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>PASSWORD</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="••••••••"
+                placeholderTextColor={COLORS.outline}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
+            
+            <Text style={styles.termsText}>
+              By creating an account, you agree to our <Text style={styles.termsHighlight}>Terms of Service</Text> and <Text style={styles.termsHighlight}>Privacy Policy</Text>.
+            </Text>
+
+            <TouchableOpacity style={styles.registerBtn} activeOpacity={0.9} onPress={handleRegister}>
+              <Text style={styles.registerBtnText}>Create Account</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.footerLink}>
+             <Text style={styles.footerText}>Already have an account? </Text>
+             <TouchableOpacity onPress={() => navigation.navigate('Login', { returnTo })}>
+               <Text style={styles.footerHighlight}>Log in</Text>
+             </TouchableOpacity>
           </View>
         </View>
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.footerLink}>Sign in</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.surface,
+  },
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+  },
+  appBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+  },
+  backBtn: {
+    width: 40,
+    height: 40,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  appBarTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: COLORS.onSurface,
   },
   content: {
     flex: 1,
-    padding: SPACING.lg,
+    paddingHorizontal: 32,
     justifyContent: 'center',
   },
-  header: {
-    marginBottom: SPACING.xl,
+  brandBlock: {
+    alignItems: 'center',
+    marginBottom: 48,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: COLORS.text,
-    marginBottom: SPACING.xs,
+  iconBox: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(0, 74, 198, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 32,
   },
-  subtitle: {
+  brandTitle: {
+    fontSize: 48,
+    fontWeight: '900',
+    color: COLORS.onSurface,
+    lineHeight: 48,
+    letterSpacing: -1,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  brandSubtitle: {
     fontSize: 16,
     color: COLORS.textSecondary,
+    textAlign: 'center',
   },
-  form: {
-    marginBottom: SPACING.xl,
+  formContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 32,
+    padding: 32,
+    shadowColor: COLORS.onSurface,
+    shadowOffset: { width: 0, height: 32 },
+    shadowOpacity: 0.04,
+    shadowRadius: 48,
+    elevation: 4,
+    gap: 24,
   },
-  buttonContainer: {
-    marginTop: SPACING.lg,
+  inputGroup: {
+    gap: 8,
   },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  inputLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: COLORS.onSurface,
+    letterSpacing: 1,
   },
-  footerText: {
+  input: {
+    height: 56,
+    backgroundColor: COLORS.surfaceContainerHighest,
+    borderRadius: 16,
+    paddingHorizontal: 24,
+    fontSize: 16,
+    color: COLORS.onSurface,
+  },
+  termsText: {
+    fontSize: 12,
+    lineHeight: 20,
     color: COLORS.textSecondary,
-    fontSize: 15,
+    textAlign: 'center',
+    paddingHorizontal: 16,
+  },
+  termsHighlight: {
+    color: COLORS.primary,
+    fontWeight: '600',
+  },
+  registerBtn: {
+    width: '100%',
+    height: 64,
+    backgroundColor: COLORS.primary,
+    borderRadius: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: COLORS.primaryContainer,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  registerBtnText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
   },
   footerLink: {
-    color: COLORS.primary,
-    fontSize: 15,
-    fontWeight: '700',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 48,
   },
+  footerText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: COLORS.textSecondary,
+  },
+  footerHighlight: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.primary,
+  }
 });

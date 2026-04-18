@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.md,
   },
   progressSection: {
-    marginTop: 'auto',
+    marginTop: 8,
   },
   progressHeader: {
     flexDirection: 'row',

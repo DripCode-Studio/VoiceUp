@@ -1,7 +1,9 @@
 import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 import { HomeScreen } from '../screens/main/HomeScreen';
 import { PetitionDetailsScreen } from '../screens/main/PetitionDetailsScreen';
@@ -20,22 +22,43 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.textSecondary,
+        tabBarShowLabel: false,
         tabBarStyle: {
-          borderTopWidth: 1,
-          borderTopColor: COLORS.border,
-          elevation: 0,
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          borderTopWidth: 0,
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -10 },
+          shadowOpacity: 0.05,
+          shadowRadius: 20,
+          height: 85,
+          backgroundColor: 'transparent',
         },
+        tabBarBackground: () => (
+          <View style={styles.blurContainer}>
+             <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(255,255,255,0.95)' }]} />
+          </View>
+        ),
       }}
     >
       <Tab.Screen 
         name="HomeTab" 
         component={HomeScreen} 
         options={{
-          title: 'Petitions',
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="list" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
+              <MaterialIcons 
+                name="home" 
+                size={24} 
+                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+              />
+              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+                Home
+              </Text>
+            </View>
           )
         }}
       />
@@ -43,9 +66,17 @@ const TabNavigator = () => {
         name="CreateTab" 
         component={CreatePetitionScreen} 
         options={{
-          title: 'Create',
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="plus-circle" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
+              <MaterialIcons 
+                name="add-circle" 
+                size={24} 
+                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+              />
+              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+                Create
+              </Text>
+            </View>
           )
         }}
       />
@@ -53,9 +84,17 @@ const TabNavigator = () => {
         name="ProfileTab" 
         component={ProfileScreen} 
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
+              <MaterialIcons 
+                name="person" 
+                size={24} 
+                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+              />
+              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+                Profile
+              </Text>
+            </View>
           )
         }}
       />
@@ -73,3 +112,38 @@ export const AppNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  blurContainer: {
+    ...StyleSheet.absoluteFillObject,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    overflow: 'hidden',
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+    width: 80,
+  },
+  activeIconContainer: {
+    backgroundColor: '#eff6ff', 
+    transform: [{ scale: 0.95 }],
+  },
+  iconLabel: {
+    fontFamily: 'System', // Ideal is Inter, fallback to System if not loaded
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginTop: 4,
+  },
+  activeIconLabel: {
+    color: COLORS.primaryContainer,
+  },
+  inactiveIconLabel: {
+    color: '#94a3b8',
+  }
+});
