@@ -80,6 +80,34 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="CampaignsTab"
+        component={AllPetitionsScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer,
+              ]}
+            >
+              <MaterialIcons
+                name="campaign"
+                size={24}
+                color={focused ? COLORS.primaryContainer : "#94a3b8"}
+              />
+              <Text
+                style={[
+                  styles.iconLabel,
+                  focused ? styles.activeIconLabel : styles.inactiveIconLabel,
+                ]}
+              >
+                Campaigns
+              </Text>
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
         name="CreateTab"
         component={CreatePetitionScreen}
         options={{
@@ -163,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 4,
     borderRadius: 16,
-    width: 88,
+    width: 78,
     height: 56,
     marginTop: 4,
   },
@@ -171,11 +199,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#eff6ff",
   },
   iconLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "600",
     lineHeight: 14,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
     textAlign: "center",
   },
   activeIconLabel: {

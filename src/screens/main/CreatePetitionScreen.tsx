@@ -134,7 +134,9 @@ export const CreatePetitionScreen = () => {
     }
 
     if (!isValidImageUrl(imageUrl)) {
-      alert("Please provide a valid image URL ending with jpg, jpeg, png, webp, or gif.");
+      alert(
+        "Please provide a valid image URL ending with jpg, jpeg, png, webp, or gif.",
+      );
       return;
     }
 
@@ -321,7 +323,10 @@ export const CreatePetitionScreen = () => {
             {/* Primary Action */}
             <View style={styles.actionWrap}>
               <TouchableOpacity
-                style={[styles.launchBtn, isSubmitting && styles.launchBtnDisabled]}
+                style={[
+                  styles.launchBtn,
+                  isSubmitting && styles.launchBtnDisabled,
+                ]}
                 activeOpacity={0.9}
                 onPress={handleCreate}
                 disabled={isSubmitting}

@@ -65,103 +65,70 @@ export const HomeScreen = () => {
             <Text style={styles.sectionOverline}>Curation</Text>
             <Text style={styles.sectionTitle}>Trending Petitions</Text>
           </View>
-          <TouchableOpacity
-            style={styles.viewAllBtn}
-            onPress={() => navigation.navigate("AllPetitions")}
-          >
-            <Text style={styles.viewAllText}>View all campaigns</Text>
-            <MaterialIcons
-              name="arrow-forward"
-              size={16}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
         </View>
 
-        {/* Bento Grid layout */}
-        {/* Large Featured Card */}
-        <TouchableOpacity
-          style={styles.largeCardWrap}
-          activeOpacity={0.95}
-          onPress={() =>
-            navigation.navigate("PetitionDetails", {
-              id: featuredPetition?.id ?? "p1",
-            })
-          }
-        >
-          <View style={styles.largeCardInner}>
-            <Image
-              source={{
-                uri:
-                  featuredPetition?.imageUrl ??
-                  "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80",
-              }}
-              style={styles.featuredImage}
-            />
-            <View style={styles.chipRow}>
-              <View style={styles.chip}>
-                <Text style={styles.chipText}>ENVIRONMENT</Text>
-              </View>
-              <Text style={styles.statText}>• 12k people signed</Text>
-            </View>
-            <Text style={styles.cardTitle}>
-              {featuredPetition?.title ??
-                "Protect the Remaining Old Growth Forests in the Northern Sector"}
-            </Text>
-            <Text style={styles.cardDescription} numberOfLines={2}>
-              {featuredPetition?.description ??
-                "The proposed logging expansion threatens an ecosystem that has stood for over 400 years. We demand immediate heritage status designation."}
-            </Text>
-
-            <View style={styles.progressSection}>
-              <View style={styles.progressHeader}>
-                <Text style={styles.progressCurrent}>
-                  {(
-                    featuredPetition?.signaturesCount ?? 85240
-                  ).toLocaleString()}{" "}
-                  signatures
-                </Text>
-                <Text style={styles.progressGoal}>
-                  Goal:{" "}
-                  {(
-                    featuredPetition?.goalSignatures ?? 100000
-                  ).toLocaleString()}
-                </Text>
-              </View>
-              <View style={styles.progressBarBg}>
-                <View
-                  style={[
-                    styles.progressBarFill,
-                    {
-                      width: `${Math.min(
-                        ((featuredPetition?.signaturesCount ?? 85240) /
-                          (featuredPetition?.goalSignatures ?? 100000)) *
-                          100,
-                        100,
-                      )}%`,
-                    },
-                  ]}
-                />
-              </View>
-            </View>
-
-            <View style={styles.authorRow}>
+        {/* Petition Cards */}
+        <View style={styles.smallCardsContainer}>
+          <TouchableOpacity
+            style={styles.smallCardWrap}
+            activeOpacity={0.95}
+            onPress={() =>
+              navigation.navigate("PetitionDetails", {
+                id: featuredPetition?.id ?? "p1",
+              })
+            }
+          >
+            <View style={styles.smallCardInner}>
               <Image
                 source={{
-                  uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuAjkQbRupTopLoybuayUxyWLQzOdr6EtLVMkLieU98Gr81fsD4gx5RrJSTiOzEgaixMqec4DGut0L7bDlo2xNCUHGso46ZCXJ2UhamXPF-lQLK1GLgzmB3b6JgxZMUWYDrPlosBrYxriSh3sW1pZ6jTeXiBBhHZZZ1wGwaEA6Pqhk4yqq1bod8QxJtVuCFSTeDH9jJDlLhkAzxAcjebIz02xsewZk0BxrmfaVFh1XD2016sBJEDwFpVd9gUiXQE13NJZebV_idp3I8e",
+                  uri:
+                    featuredPetition?.imageUrl ??
+                    "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80",
                 }}
-                style={styles.authorAvatar}
+                style={styles.smallCardImage}
               />
-              <Text style={styles.authorText}>
-                Started by{" "}
-                <Text style={{ fontWeight: "700" }}>Elias Jorgen</Text>
+              <Text style={styles.smallCardTitle}>
+                {featuredPetition?.title ??
+                  "Protect the Remaining Old Growth Forests in the Northern Sector"}
               </Text>
+              <Text style={styles.smallCardDesc} numberOfLines={2}>
+                {featuredPetition?.description ??
+                  "The proposed logging expansion threatens an ecosystem that has stood for over 400 years. We demand immediate heritage status designation."}
+              </Text>
+              <View style={styles.smallCardBottom}>
+                <View style={styles.progressBarBgSm}>
+                  <View
+                    style={[
+                      styles.progressBarFill,
+                      {
+                        width: `${Math.min(
+                          ((featuredPetition?.signaturesCount ?? 85240) /
+                            (featuredPetition?.goalSignatures ?? 100000)) *
+                            100,
+                          100,
+                        )}%`,
+                      },
+                    ]}
+                  />
+                </View>
+                <View style={styles.progressHeader}>
+                  <Text style={styles.smallProgressText}>
+                    {(
+                      featuredPetition?.signaturesCount ?? 85240
+                    ).toLocaleString()}{" "}
+                    SIGNED
+                  </Text>
+                  <Text style={styles.smallProgressText}>
+                    GOAL{" "}
+                    {(
+                      featuredPetition?.goalSignatures ?? 100000
+                    ).toLocaleString()}
+                  </Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-        {/* Small Cards */}
-        <View style={styles.smallCardsContainer}>
           <TouchableOpacity
             style={styles.smallCardWrap}
             activeOpacity={0.95}
@@ -372,15 +339,11 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 8,
+    alignItems: "flex-start",
     marginBottom: 36,
   },
   sectionHeadingBlock: {
-    flex: 1,
     minWidth: 0,
-    paddingRight: 12,
   },
   sectionOverline: {
     color: COLORS.primary,
@@ -395,97 +358,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: COLORS.onSurface,
   },
-  viewAllBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    flexShrink: 0,
-  },
-  viewAllText: {
-    color: COLORS.primary,
-    fontWeight: "600",
-    fontSize: 14,
-  },
-  largeCardWrap: {
-    backgroundColor: "#eff4ff",
-    borderRadius: 32,
-    padding: 4,
-    marginBottom: 40,
-  },
-  largeCardInner: {
-    backgroundColor: "#ffffff",
-    borderRadius: 28,
-    padding: 28,
-  },
-  featuredImage: {
-    width: "100%",
-    aspectRatio: 16 / 7,
-    borderRadius: 16,
-    marginBottom: 24,
-  },
-  chipRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 20,
-  },
-  chip: {
-    backgroundColor: "rgba(0, 74, 198, 0.1)",
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 16,
-  },
-  chipText: {
-    color: COLORS.primary,
-    fontSize: 10,
-    fontWeight: "800",
-    letterSpacing: 1,
-  },
-  statText: {
-    fontSize: 12,
-    color: COLORS.textSecondary,
-    lineHeight: 16,
-  },
-  cardTitle: {
-    fontSize: 26,
-    fontWeight: "800",
-    lineHeight: 34,
-    color: COLORS.onSurface,
-    marginBottom: 16,
-  },
-  cardDescription: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: COLORS.textSecondary,
-    marginBottom: 28,
-  },
-  progressSection: {
-    marginBottom: 28,
-    marginTop: 8,
-  },
   progressHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 12,
-  },
-  progressCurrent: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: COLORS.primary,
-    textTransform: "uppercase",
-  },
-  progressGoal: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: COLORS.textSecondary,
-    textTransform: "uppercase",
-  },
-  progressBarBg: {
-    height: 12,
-    backgroundColor: COLORS.surfaceContainerHighest,
-    borderRadius: 8,
-    overflow: "hidden",
   },
   progressBarBgSm: {
     height: 6,
@@ -498,25 +375,6 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: COLORS.primary,
     borderRadius: 8,
-  },
-  authorRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    paddingTop: 28,
-    borderTopWidth: 1,
-    borderTopColor: "rgba(0,0,0,0.05)",
-  },
-  authorAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-  },
-  authorText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: COLORS.onSurface,
-    lineHeight: 20,
   },
   smallCardsContainer: {
     gap: 24,

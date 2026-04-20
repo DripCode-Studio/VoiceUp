@@ -17,6 +17,7 @@ import { COLORS } from "../../utils/constants";
 export const AllPetitionsScreen = () => {
   const navigation = useNavigation<any>();
   const { petitions, isLoading, fetchPetitions } = usePetitionStore();
+  const canGoBack = navigation.canGoBack();
 
   useEffect(() => {
     if (petitions.length === 0) {
@@ -29,13 +30,23 @@ export const AllPetitionsScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => navigation.goBack()}
-          activeOpacity={0.8}
-        >
-          <MaterialIcons name="arrow-back" size={24} color={COLORS.onSurface} />
-        </TouchableOpacity>
+        {canGoBack ? (
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+            activeOpacity={0.8}
+          >
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              color={COLORS.onSurface}
+            />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.backBtnPlaceholder}>
+            <MaterialIcons name="campaign" size={22} color={COLORS.primary} />
+          </View>
+        )}
 
         <View style={styles.headerTextWrap}>
           <Text style={styles.headerOverline}>Directory</Text>
@@ -129,6 +140,14 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.surfaceContainer,
+  },
+  backBtnPlaceholder: {
     width: 40,
     height: 40,
     borderRadius: 20,
