@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { HomeScreen } from '../screens/main/HomeScreen';
 import { PetitionDetailsScreen } from '../screens/main/PetitionDetailsScreen';
+import { AllPetitionsScreen } from '../screens/main/AllPetitionsScreen';
 import { CreatePetitionScreen } from '../screens/main/CreatePetitionScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
@@ -106,6 +107,7 @@ export const AppNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabNavigator} />
+      <Stack.Screen name="AllPetitions" component={AllPetitionsScreen} />
       <Stack.Screen name="PetitionDetails" component={PetitionDetailsScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />

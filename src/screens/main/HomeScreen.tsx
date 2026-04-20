@@ -61,7 +61,10 @@ export const HomeScreen = () => {
             <Text style={styles.sectionOverline}>Curation</Text>
             <Text style={styles.sectionTitle}>Trending Petitions</Text>
           </View>
-          <TouchableOpacity style={styles.viewAllBtn}>
+          <TouchableOpacity
+            style={styles.viewAllBtn}
+            onPress={() => navigation.navigate("AllPetitions")}
+          >
             <Text style={styles.viewAllText}>View all campaigns</Text>
             <MaterialIcons
               name="arrow-forward"
