@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { COLORS, SPACING } from '../utils/constants';
+import { Feather } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { COLORS, SPACING } from "../utils/constants";
 
 interface HeaderProps {
   title: string;
@@ -19,20 +19,20 @@ export const Header = ({ title, onBack, rightElement }: HeaderProps) => {
           </TouchableOpacity>
         )}
       </View>
-      <Text style={styles.title} numberOfLines={1}>{title}</Text>
-      <View style={styles.right}>
-        {rightElement}
-      </View>
+      <Text style={styles.title} numberOfLines={1}>
+        {title}
+      </Text>
+      <View style={styles.right}>{rightElement}</View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    height: 64,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: SPACING.md,
     backgroundColor: COLORS.surface,
     borderBottomWidth: 1,
@@ -40,21 +40,22 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   backButton: {
-    padding: SPACING.xs,
-    marginLeft: -SPACING.xs,
+    padding: SPACING.sm,
+    marginLeft: -SPACING.sm,
   },
   title: {
     flex: 2,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: "700",
     color: COLORS.text,
+    lineHeight: 24,
   },
   right: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
 });
