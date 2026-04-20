@@ -145,8 +145,8 @@ export const PetitionDetailsScreen = () => {
                 color={COLORS.primary}
               />
               <Text style={styles.demandText}>
-                Immediate suspension of the &quot;Project Greenview&quot; development
-                permit.
+                Immediate suspension of the &quot;Project Greenview&quot;
+                development permit.
               </Text>
             </View>
 

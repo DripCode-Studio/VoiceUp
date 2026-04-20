@@ -76,7 +76,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
           style={styles.largeCardWrap}
           activeOpacity={0.95}
-          onPress={() => navigation.navigate("PetitionDetails", { id: "1" })}
+          onPress={() => navigation.navigate("PetitionDetails", { id: "p1" })}
         >
           <View style={styles.largeCardInner}>
             <Image
@@ -127,7 +127,11 @@ export const HomeScreen = () => {
 
         {/* Small Cards */}
         <View style={styles.smallCardsContainer}>
-          <TouchableOpacity style={styles.smallCardWrap} activeOpacity={0.95}>
+          <TouchableOpacity
+            style={styles.smallCardWrap}
+            activeOpacity={0.95}
+            onPress={() => navigation.navigate("PetitionDetails", { id: "p2" })}
+          >
             <View style={styles.smallCardInner}>
               <Text style={styles.smallCardTitle}>
                 Universal Access to Mental Healthcare in Public Schools
@@ -148,7 +152,11 @@ export const HomeScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.smallCardWrap} activeOpacity={0.95}>
+          <TouchableOpacity
+            style={styles.smallCardWrap}
+            activeOpacity={0.95}
+            onPress={() => navigation.navigate("PetitionDetails", { id: "p3" })}
+          >
             <View style={styles.smallCardInner}>
               <Text style={styles.smallCardTitle}>
                 Mandatory Urban Green Space in All New Developments
