@@ -19,23 +19,34 @@ export const RegisterScreen = () => {
   const route = useRoute<any>();
   const returnTo = route.params?.returnTo || "HomeTab";
 
-  const { login } = useAuthStore();
+  const { register } = useAuthStore();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = () => {
-    if (name && email && password) {
-      // Mock registration logic
-      login({ id: String(Date.now()), name, email });
-      if (returnTo === "goBack") {
-        navigation.goBack();
-      } else {
-        navigation.navigate(returnTo);
-      }
-    } else {
+  const navigateAfterAuth = () => {
+    if (returnTo === "goBack") {
+      navigation.goBack();
+      return;
+    }
+
+    navigation.navigate("Tabs", {
+      screen: returnTo,
+    });
+  };
+
+  const handleRegister = async () => {
+    if (!name || !email || !password) {
       alert("Please fill out all fields");
+      return;
+    }
+
+    try {
+      await register(name.trim(), email.trim().toLowerCase());
+      navigateAfterAuth();
+    } catch {
+      alert("Registration failed. Please try again.");
     }
   };
 

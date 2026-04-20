@@ -24,17 +24,28 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Basic mock authentication
-    if (email && password) {
-      login({ id: "1", name: email.split("@")[0], email });
-      if (returnTo === "goBack") {
-        navigation.goBack();
-      } else {
-        navigation.navigate(returnTo);
-      }
-    } else {
+  const navigateAfterAuth = () => {
+    if (returnTo === "goBack") {
+      navigation.goBack();
+      return;
+    }
+
+    navigation.navigate("Tabs", {
+      screen: returnTo,
+    });
+  };
+
+  const handleLogin = async () => {
+    if (!email || !password) {
       alert("Please fill out all fields");
+      return;
+    }
+
+    try {
+      await login(email.trim().toLowerCase());
+      navigateAfterAuth();
+    } catch {
+      alert("Login failed. Please use a registered email.");
     }
   };
 
