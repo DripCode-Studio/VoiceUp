@@ -11,10 +11,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { MOCK_PETITIONS } from "../../services/mockData";
 import { COLORS } from "../../utils/constants";
 
 export const HomeScreen = () => {
   const navigation = useNavigation<any>();
+  const featuredPetition = MOCK_PETITIONS[0];
+  const secondPetition = MOCK_PETITIONS[1];
+  const thirdPetition = MOCK_PETITIONS[2];
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -57,7 +61,7 @@ export const HomeScreen = () => {
 
         {/* Trending Petitions Header */}
         <View style={styles.sectionHeader}>
-          <View>
+          <View style={styles.sectionHeadingBlock}>
             <Text style={styles.sectionOverline}>Curation</Text>
             <Text style={styles.sectionTitle}>Trending Petitions</Text>
           </View>
@@ -79,12 +83,18 @@ export const HomeScreen = () => {
         <TouchableOpacity
           style={styles.largeCardWrap}
           activeOpacity={0.95}
-          onPress={() => navigation.navigate("PetitionDetails", { id: "p1" })}
+          onPress={() =>
+            navigation.navigate("PetitionDetails", {
+              id: featuredPetition?.id ?? "p1",
+            })
+          }
         >
           <View style={styles.largeCardInner}>
             <Image
               source={{
-                uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuANuNiyI07h-RMf_bz_-OKjOUZHtDNtftm_Gp5Hr_mtDsbFo6xE2FPSOmcmLmQqgNozicfAbrI_sNIz092L_5IJA8l-BO0Sg591vE_Hu2iTPhRGhUJFuSb-iWMsxHXyEACPAWHqKY2dC-83lr6pG2x365cQ78e6H_az78EM4On5TtGZw7yhFQP_OuAb3_wnMEWUty8fT3cRvzpvjfgtUODnUxt_MZdJap5rIceGOubr0MFWxwom0eRLojoMM71qo1JxOkyKtpt4sxYI",
+                uri:
+                  featuredPetition?.imageUrl ??
+                  "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80",
               }}
               style={styles.featuredImage}
             />
@@ -95,21 +105,37 @@ export const HomeScreen = () => {
               <Text style={styles.statText}>• 12k people signed</Text>
             </View>
             <Text style={styles.cardTitle}>
-              Protect the Remaining Old Growth Forests in the Northern Sector
+              {featuredPetition?.title ??
+                "Protect the Remaining Old Growth Forests in the Northern Sector"}
             </Text>
             <Text style={styles.cardDescription} numberOfLines={2}>
-              The proposed logging expansion threatens an ecosystem that has
-              stood for over 400 years. We demand immediate heritage status
-              designation.
+              {featuredPetition?.description ??
+                "The proposed logging expansion threatens an ecosystem that has stood for over 400 years. We demand immediate heritage status designation."}
             </Text>
 
             <View style={styles.progressSection}>
               <View style={styles.progressHeader}>
-                <Text style={styles.progressCurrent}>85,240 signatures</Text>
-                <Text style={styles.progressGoal}>Goal: 100,000</Text>
+                <Text style={styles.progressCurrent}>
+                  {(featuredPetition?.signaturesCount ?? 85240).toLocaleString()} signatures
+                </Text>
+                <Text style={styles.progressGoal}>
+                  Goal: {(featuredPetition?.goalSignatures ?? 100000).toLocaleString()}
+                </Text>
               </View>
               <View style={styles.progressBarBg}>
-                <View style={[styles.progressBarFill, { width: "85%" }]} />
+                <View
+                  style={[
+                    styles.progressBarFill,
+                    {
+                      width: `${Math.min(
+                        ((featuredPetition?.signaturesCount ?? 85240) /
+                          (featuredPetition?.goalSignatures ?? 100000)) *
+                          100,
+                        100,
+                      )}%`,
+                    },
+                  ]}
+                />
               </View>
             </View>
 
@@ -133,23 +159,52 @@ export const HomeScreen = () => {
           <TouchableOpacity
             style={styles.smallCardWrap}
             activeOpacity={0.95}
-            onPress={() => navigation.navigate("PetitionDetails", { id: "p2" })}
+            onPress={() =>
+              navigation.navigate("PetitionDetails", {
+                id: secondPetition?.id ?? "p2",
+              })
+            }
           >
             <View style={styles.smallCardInner}>
+              <Image
+                source={{
+                  uri:
+                    secondPetition?.imageUrl ??
+                    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=80",
+                }}
+                style={styles.smallCardImage}
+              />
               <Text style={styles.smallCardTitle}>
-                Universal Access to Mental Healthcare in Public Schools
+                {secondPetition?.title ??
+                  "Universal Access to Mental Healthcare in Public Schools"}
               </Text>
               <Text style={styles.smallCardDesc} numberOfLines={2}>
-                Integrating licensed therapists into every primary and secondary
-                campus nationwide.
+                {secondPetition?.description ??
+                  "Integrating licensed therapists into every primary and secondary campus nationwide."}
               </Text>
               <View style={styles.smallCardBottom}>
                 <View style={styles.progressBarBgSm}>
-                  <View style={[styles.progressBarFill, { width: "42%" }]} />
+                  <View
+                    style={[
+                      styles.progressBarFill,
+                      {
+                        width: `${Math.min(
+                          ((secondPetition?.signaturesCount ?? 4200) /
+                            (secondPetition?.goalSignatures ?? 10000)) *
+                            100,
+                          100,
+                        )}%`,
+                      },
+                    ]}
+                  />
                 </View>
                 <View style={styles.progressHeader}>
-                  <Text style={styles.smallProgressText}>4.2K SIGNED</Text>
-                  <Text style={styles.smallProgressText}>GOAL 10K</Text>
+                  <Text style={styles.smallProgressText}>
+                    {(secondPetition?.signaturesCount ?? 4200).toLocaleString()} SIGNED
+                  </Text>
+                  <Text style={styles.smallProgressText}>
+                    GOAL {(secondPetition?.goalSignatures ?? 10000).toLocaleString()}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -158,23 +213,52 @@ export const HomeScreen = () => {
           <TouchableOpacity
             style={styles.smallCardWrap}
             activeOpacity={0.95}
-            onPress={() => navigation.navigate("PetitionDetails", { id: "p3" })}
+            onPress={() =>
+              navigation.navigate("PetitionDetails", {
+                id: thirdPetition?.id ?? "p3",
+              })
+            }
           >
             <View style={styles.smallCardInner}>
+              <Image
+                source={{
+                  uri:
+                    thirdPetition?.imageUrl ??
+                    "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80",
+                }}
+                style={styles.smallCardImage}
+              />
               <Text style={styles.smallCardTitle}>
-                Mandatory Urban Green Space in All New Developments
+                {thirdPetition?.title ??
+                  "Mandatory Urban Green Space in All New Developments"}
               </Text>
               <Text style={styles.smallCardDesc} numberOfLines={2}>
-                Proposing a law requiring 20% of urban construction plots to be
-                dedicated public parks.
+                {thirdPetition?.description ??
+                  "Proposing a law requiring 20% of urban construction plots to be dedicated public parks."}
               </Text>
               <View style={styles.smallCardBottom}>
                 <View style={styles.progressBarBgSm}>
-                  <View style={[styles.progressBarFill, { width: "71%" }]} />
+                  <View
+                    style={[
+                      styles.progressBarFill,
+                      {
+                        width: `${Math.min(
+                          ((thirdPetition?.signaturesCount ?? 17800) /
+                            (thirdPetition?.goalSignatures ?? 25000)) *
+                            100,
+                          100,
+                        )}%`,
+                      },
+                    ]}
+                  />
                 </View>
                 <View style={styles.progressHeader}>
-                  <Text style={styles.smallProgressText}>17.8K SIGNED</Text>
-                  <Text style={styles.smallProgressText}>GOAL 25K</Text>
+                  <Text style={styles.smallProgressText}>
+                    {(thirdPetition?.signaturesCount ?? 17800).toLocaleString()} SIGNED
+                  </Text>
+                  <Text style={styles.smallProgressText}>
+                    GOAL {(thirdPetition?.goalSignatures ?? 25000).toLocaleString()}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -279,8 +363,14 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
+    gap: 8,
     marginBottom: 36,
+  },
+  sectionHeadingBlock: {
+    flex: 1,
+    minWidth: 0,
+    paddingRight: 12,
   },
   sectionOverline: {
     color: COLORS.primary,
@@ -299,6 +389,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
+    flexShrink: 0,
   },
   viewAllText: {
     color: COLORS.primary,
@@ -430,6 +521,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 28,
     padding: 28,
+  },
+  smallCardImage: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+    borderRadius: 16,
+    marginBottom: 16,
   },
   smallCardTitle: {
     fontSize: 18,
