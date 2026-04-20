@@ -1,51 +1,68 @@
-import { create } from 'zustand';
-import { Petition, MOCK_PETITIONS } from '../services/mockData';
-import { useAuthStore } from './useAuthStore';
+import { create } from "zustand";
+import { MOCK_PETITIONS, Petition } from "../services/mockData";
+import { useAuthStore } from "./useAuthStore";
 
 interface PetitionState {
   petitions: Petition[];
   signedPetitionIds: string[];
   isLoading: boolean;
   fetchPetitions: () => Promise<void>;
-  signPetition: (petitionId: string, guestName?: string, guestEmail?: string) => Promise<void>;
-  createPetition: (title: string, description: string, goalSignatures: number) => Promise<void>;
+  signPetition: (
+    petitionId: string,
+    guestName?: string,
+    guestEmail?: string,
+  ) => Promise<void>;
+  createPetition: (
+    title: string,
+    description: string,
+    goalSignatures: number,
+  ) => Promise<void>;
+  hasSigned: (petitionId: string) => boolean;
 }
 
 export const usePetitionStore = create<PetitionState>((set, get) => ({
   petitions: [],
   signedPetitionIds: [],
   isLoading: false,
-  
+
   fetchPetitions: async () => {
     set({ isLoading: true });
     await new Promise((res) => setTimeout(res, 500));
     set({ petitions: MOCK_PETITIONS, isLoading: false });
   },
 
-  signPetition: async (petitionId: string, guestName?: string, guestEmail?: string) => {
+  signPetition: async (
+    petitionId: string,
+    guestName?: string,
+    guestEmail?: string,
+  ) => {
     const { signedPetitionIds, petitions } = get();
     if (signedPetitionIds.includes(petitionId)) {
-      throw new Error('Already signed');
+      throw new Error("Already signed");
     }
 
     // Simulate API delay
     await new Promise((res) => setTimeout(res, 500));
-    
+
     set({
       signedPetitionIds: [...signedPetitionIds, petitionId],
-      petitions: petitions.map(p => 
-        p.id === petitionId 
+      petitions: petitions.map((p) =>
+        p.id === petitionId
           ? { ...p, signaturesCount: p.signaturesCount + 1 }
-          : p
-      )
+          : p,
+      ),
     });
   },
 
-  createPetition: async (title: string, description: string, goalSignatures: number) => {
+  createPetition: async (
+    title: string,
+    description: string,
+    goalSignatures: number,
+  ) => {
     const { petitions } = get();
     const user = useAuthStore.getState().user;
-    
-    if (!user) throw new Error('Must be logged in');
+
+    if (!user) throw new Error("Must be logged in");
 
     await new Promise((res) => setTimeout(res, 800));
 
@@ -60,9 +77,14 @@ export const usePetitionStore = create<PetitionState>((set, get) => ({
       goalSignatures,
     };
 
-    set({ 
+    set({
       petitions: [newPetition, ...petitions],
-      signedPetitionIds: [...get().signedPetitionIds, newPetition.id]
+      signedPetitionIds: [...get().signedPetitionIds, newPetition.id],
     });
-  }
+  },
+
+  hasSigned: (petitionId: string) => {
+    const { signedPetitionIds } = get();
+    return signedPetitionIds.includes(petitionId);
+  },
 }));
