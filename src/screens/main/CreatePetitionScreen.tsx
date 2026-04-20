@@ -178,9 +178,7 @@ export const CreatePetitionScreen = () => {
           <View style={styles.appBarLeft}>
             <View style={styles.avatarWrap}>
               <Image
-                source={{
-                  uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCucXxnuDgFfSk7jZm313BAkF1O3E5pm26ImkRMAevMhJTeTTLztue-Y5nqa4rtYqKBJfp6l2BC1vz9anF_PrGdv_nnv29tp-WUwhWx3U3N1eHRrwhVd70Ig6-dflophiVoKpQ-4UFaoscCTh9ppAX-0XBML7pZteKW7AdVT2FcYrxFB3IoNOiQPwrzDxvnNrFxBQhXKvuwxSuos42nnDvowESEMS17VFRY0PiEi30s995ZIN7HwXtGUeDAsR4NclTwXZvtNRp3Xz1w",
-                }}
+                source={require("../../../assets/AppIcons/playstore.png")}
                 style={styles.avatarImg}
               />
             </View>

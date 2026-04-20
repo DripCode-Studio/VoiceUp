@@ -26,9 +26,7 @@ export const HomeScreen = () => {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Image
-            source={{
-              uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOXPN2Po219NrnOrneqwLWH868iwi6OIyMRn4j-r1JN9OnwxFEO30hw2Qe1o6LW8Fk7and17dGDvdb6NPR8vsLB_8i3xWaxN761xNxd9ojXd_HUWMJ9kMNQJyPaFhWnagfvh6spI8OnGb75PbvLQxsdAqub7SAcq6v6O4zflbF_IfN2N25i7YuRomMpIb_5sPZKjkuEws3bN270gVQ0PIERKZi3mjK9dDERG0zEBWcYuD5GN-SHykmqP9nJUEeNohcWTdh8rsH6g_o",
-            }}
+            source={require("../../../assets/AppIcons/playstore.png")}
             style={styles.avatar}
           />
           <Text style={styles.brandTitle}>VoiceUp</Text>
