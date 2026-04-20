@@ -1,6 +1,12 @@
-import React from 'react';
-import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
-import { COLORS, SPACING, RADIUS } from '../utils/constants';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
+import { COLORS, RADIUS, SPACING } from "../utils/constants";
 
 interface InputFieldProps extends TextInputProps {
   label?: string;
@@ -27,7 +33,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     color: COLORS.text,
     marginBottom: SPACING.sm,
     lineHeight: 20,
