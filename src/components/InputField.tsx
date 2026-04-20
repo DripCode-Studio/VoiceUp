@@ -27,19 +27,22 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '600',
     color: COLORS.text,
-    marginBottom: SPACING.xs,
+    marginBottom: SPACING.sm,
+    lineHeight: 20,
   },
   input: {
-    height: 52,
+    height: 56,
     backgroundColor: COLORS.surface,
     borderWidth: 1,
     borderColor: COLORS.border,
     borderRadius: RADIUS.md,
     paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
     fontSize: 16,
     color: COLORS.text,
+    lineHeight: 24,
   },
   inputError: {
     borderColor: COLORS.danger,
@@ -48,5 +51,6 @@ const styles = StyleSheet.create({
     color: COLORS.danger,
     fontSize: 12,
     marginTop: SPACING.xs,
+    lineHeight: 16,
   },
 });

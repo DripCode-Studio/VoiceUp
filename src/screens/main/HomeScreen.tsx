@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.02)',
   },
@@ -192,18 +192,18 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 24,
-    paddingTop: 48,
+    paddingTop: 40,
   },
   heroSection: {
     marginBottom: 64,
   },
   heroTitle: {
     fontSize: 48,
-    lineHeight: 52,
+    lineHeight: 56,
     fontWeight: '900',
     color: COLORS.onSurface,
     letterSpacing: -1,
-    marginBottom: 24,
+    marginBottom: 32,
   },
   heroTitleAccent: {
     color: '#004ac6',
@@ -214,13 +214,14 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     lineHeight: 28,
     color: '#434655',
-    marginLeft: '12%',
+    marginLeft: 0,
+    paddingRight: 20,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginBottom: 32,
+    marginBottom: 36,
   },
   sectionOverline: {
     color: COLORS.primary,
@@ -249,12 +250,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#eff4ff',
     borderRadius: 32,
     padding: 4,
-    marginBottom: 32,
+    marginBottom: 40,
   },
   largeCardInner: {
     backgroundColor: '#ffffff',
     borderRadius: 28,
-    padding: 24,
+    padding: 28,
   },
   featuredImage: {
     width: '100%',
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    marginBottom: 16,
+    marginBottom: 20,
   },
   chip: {
     backgroundColor: 'rgba(0, 74, 198, 0.1)',
@@ -283,26 +284,29 @@ const styles = StyleSheet.create({
   statText: {
     fontSize: 12,
     color: COLORS.textSecondary,
+    lineHeight: 16,
   },
   cardTitle: {
     fontSize: 26,
     fontWeight: '800',
-    lineHeight: 32,
+    lineHeight: 34,
     color: COLORS.onSurface,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   cardDescription: {
     fontSize: 15,
     lineHeight: 24,
     color: COLORS.textSecondary,
-    marginBottom: 24,
+    marginBottom: 28,
   },
   progressSection: {
-    marginBottom: 24,
+    marginBottom: 28,
+    marginTop: 8,
   },
   progressHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12,
   },
   progressCurrent: {
@@ -318,7 +322,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   progressBarBg: {
-    height: 16,
+    height: 12,
     backgroundColor: COLORS.surfaceContainerHighest,
     borderRadius: 8,
     overflow: 'hidden',
@@ -339,7 +343,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    paddingTop: 24,
+    paddingTop: 28,
     borderTopWidth: 1,
     borderTopColor: 'rgba(0,0,0,0.05)',
   },
@@ -352,6 +356,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: COLORS.onSurface,
+    lineHeight: 20,
   },
   smallCardsContainer: {
     gap: 24,
@@ -365,19 +370,20 @@ const styles = StyleSheet.create({
   smallCardInner: {
     backgroundColor: '#ffffff',
     borderRadius: 28,
-    padding: 24,
+    padding: 28,
   },
   smallCardTitle: {
     fontSize: 18,
     fontWeight: '800',
-    lineHeight: 24,
+    lineHeight: 26,
     color: COLORS.onSurface,
     marginBottom: 12,
   },
   smallCardDesc: {
     fontSize: 14,
+    lineHeight: 22,
     color: COLORS.textSecondary,
-    marginBottom: 32,
+    marginBottom: 24,
   },
   smallCardBottom: {
     marginTop: 16,
@@ -391,7 +397,7 @@ const styles = StyleSheet.create({
   alertCard: {
     backgroundColor: COLORS.primary,
     borderRadius: 48,
-    padding: 40,
+    padding: 44,
     overflow: 'hidden',
     marginBottom: 48,
   },
@@ -403,12 +409,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     fontStyle: 'italic',
-    marginBottom: 16,
+    marginBottom: 20,
+    lineHeight: 40,
   },
   alertDesc: {
-    color: 'rgba(255,255,255,0.8)',
+    color: 'rgba(255,255,255,0.85)',
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 26,
     marginBottom: 32,
   },
   alertBtn: {

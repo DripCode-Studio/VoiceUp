@@ -46,12 +46,17 @@ export const PrimaryButton = ({ title, onPress, disabled, loading, variant = 'pr
 
 const styles = StyleSheet.create({
   button: {
-    height: 52,
+    height: 56,
     borderRadius: RADIUS.lg,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: SPACING.lg,
     flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
   },
   border: {
     borderWidth: 1,
@@ -59,6 +64,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+    lineHeight: 24,
   },
 });

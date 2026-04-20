@@ -157,12 +157,14 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: COLORS.onSurface,
     letterSpacing: -2,
-    marginBottom: 8,
+    marginBottom: 12,
+    lineHeight: 64,
   },
   brandSubtitle: {
     fontSize: 18,
     fontWeight: '500',
     color: COLORS.textSecondary,
+    lineHeight: 26,
   },
   formContainer: {
     width: '100%',
@@ -173,12 +175,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: 'rgba(115, 118, 134, 0.15)',
-    marginBottom: 32,
+    marginBottom: 28,
   },
   inputWrapper: {
-    paddingTop: 32,
-    paddingBottom: 12,
-    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 16,
+    paddingHorizontal: 18,
     position: 'relative',
   },
   inputFloatLabel: {
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
     color: COLORS.onSurface,
     padding: 0,
     margin: 0,
+    lineHeight: 24,
   },
   divider: {
     height: 1,
@@ -222,6 +225,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '800',
+    lineHeight: 24,
   },
   rowBetween: {
     flexDirection: 'row',
@@ -233,11 +237,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: COLORS.textSecondary,
+    lineHeight: 20,
   },
   forgotText: {
     fontSize: 14,
     fontWeight: '700',
     color: COLORS.primary,
+    lineHeight: 20,
   },
   footerLink: {
     flexDirection: 'row',
@@ -248,10 +254,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: COLORS.textSecondary,
+    lineHeight: 24,
   },
   footerHighlight: {
     fontSize: 16,
     fontWeight: '700',
     color: COLORS.onSurface,
+    lineHeight: 24,
   }
 });

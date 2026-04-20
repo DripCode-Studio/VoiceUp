@@ -29,7 +29,7 @@ export const Header = ({ title, onBack, rightElement }: HeaderProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: 64,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   backButton: {
-    padding: SPACING.xs,
-    marginLeft: -SPACING.xs,
+    padding: SPACING.sm,
+    marginLeft: -SPACING.sm,
   },
   title: {
     flex: 2,
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: COLORS.text,
+    lineHeight: 24,
   },
   right: {
     flex: 1,
