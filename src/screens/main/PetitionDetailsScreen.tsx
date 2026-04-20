@@ -38,6 +38,7 @@ export const PetitionDetailsScreen = () => {
 
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
+  const [isSignFlowOpen, setIsSignFlowOpen] = useState(false);
 
   // Fallback data if id not found
   const petition = petitions.find((p) => p.id === id) || {
@@ -47,23 +48,32 @@ export const PetitionDetailsScreen = () => {
       "Oakwood Commons has been the heart of our community for over fifty years. It's where our children learn to ride bikes, where senior citizens find shade under century-old oaks, and where our local wildlife finds a rare sanctuary within the city limits.\n\nRecent plans submitted to the city council propose replacing 70% of this green space with a high-density luxury residential complex and a multi-level parking garage. While we recognize the need for housing, destroying one of the few remaining public parks is not the solution.\n\nThe development would not only eliminate vital recreation space but also significantly increase local traffic and put immense strain on our local drainage systems. We are calling on the City Planning Commission to reject the current proposal and designate Oakwood Commons as a protected municipal heritage site.",
     authorId: "user1",
     authorName: "Sarah Jenkins",
-    signatureCount: 12450,
-    goal: 15000,
+    signaturesCount: 12450,
+    goalSignatures: 15000,
   };
 
   const isSigned = hasSigned(petition.id);
+  const currentSignatures = petition.signaturesCount;
+  const currentGoal = petition.goalSignatures;
 
-  const handleSign = () => {
+  const handleSign = async () => {
     if (isSigned) return;
 
-    if (!user) {
-      if (!guestName.trim() || !guestEmail.trim()) {
-        alert("Please provide your name and email to sign.");
-        return;
+    try {
+      if (!user) {
+        if (!guestName.trim() || !guestEmail.trim()) {
+          alert("Please provide your name and email to sign.");
+          return;
+        }
+        await signPetition(petition.id, guestName, guestEmail);
+      } else {
+        await signPetition(petition.id);
       }
-      signPetition(petition.id, guestName, guestEmail);
-    } else {
-      signPetition(petition.id);
+      setGuestName("");
+      setGuestEmail("");
+      setIsSignFlowOpen(false);
+    } catch {
+      alert("Unable to sign petition right now. Please try again.");
     }
   };
 
@@ -135,7 +145,7 @@ export const PetitionDetailsScreen = () => {
                 color={COLORS.primary}
               />
               <Text style={styles.demandText}>
-                Immediate suspension of the "Project Greenview" development
+                Immediate suspension of the &quot;Project Greenview&quot; development
                 permit.
               </Text>
             </View>
@@ -177,12 +187,12 @@ export const PetitionDetailsScreen = () => {
           <View style={styles.statsRow}>
             <View>
               <Text style={styles.statsNumber}>
-                {petition.signatureCount.toLocaleString()}
+                {currentSignatures.toLocaleString()}
               </Text>
               <Text style={styles.statsLabel}>SIGNATURES</Text>
             </View>
             <Text style={styles.statsGoal}>
-              Goal: {petition.goal.toLocaleString()}
+              Goal: {currentGoal.toLocaleString()}
             </Text>
           </View>
 
@@ -191,7 +201,10 @@ export const PetitionDetailsScreen = () => {
               style={[
                 styles.progressFill,
                 {
-                  width: `${(petition.signatureCount / petition.goal) * 100}%`,
+                  width: `${Math.min(
+                    (currentSignatures / currentGoal) * 100,
+                    100,
+                  )}%`,
                 },
               ]}
             />
@@ -231,37 +244,66 @@ export const PetitionDetailsScreen = () => {
             </Text>
           </View>
 
-          {!user && !isSigned && (
-            <View style={styles.guestInputs}>
-              <TextInput
-                style={styles.input}
-                placeholder="Full Name"
-                placeholderTextColor={COLORS.outline}
-                value={guestName}
-                onChangeText={setGuestName}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Email Address"
-                placeholderTextColor={COLORS.outline}
-                value={guestEmail}
-                onChangeText={setGuestEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
+          {isSigned && (
+            <TouchableOpacity
+              style={[styles.signBtn, styles.signedBtn]}
+              activeOpacity={1}
+              disabled
+            >
+              <Text style={styles.signBtnText}>Petition Signed</Text>
+            </TouchableOpacity>
           )}
 
-          <TouchableOpacity
-            style={[styles.signBtn, isSigned && styles.signedBtn]}
-            activeOpacity={0.9}
-            onPress={handleSign}
-            disabled={isSigned}
-          >
-            <Text style={styles.signBtnText}>
-              {isSigned ? "Petition Signed" : "Sign this petition"}
-            </Text>
-          </TouchableOpacity>
+          {!isSigned && !isSignFlowOpen && (
+            <TouchableOpacity
+              style={[styles.signBtn, styles.signBtnIdleSpacing]}
+              activeOpacity={0.9}
+              onPress={() => setIsSignFlowOpen(true)}
+            >
+              <Text style={styles.signBtnText}>Sign this petition</Text>
+            </TouchableOpacity>
+          )}
+
+          {!isSigned && isSignFlowOpen && (
+            <>
+              {!user && (
+                <View style={styles.guestInputs}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Full Name"
+                    placeholderTextColor={COLORS.outline}
+                    value={guestName}
+                    onChangeText={setGuestName}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Email Address"
+                    placeholderTextColor={COLORS.outline}
+                    value={guestEmail}
+                    onChangeText={setGuestEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                  />
+                </View>
+              )}
+
+              <TouchableOpacity
+                style={styles.signBtn}
+                activeOpacity={0.9}
+                onPress={handleSign}
+              >
+                <Text style={styles.signBtnText}>Confirm signature</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.cancelSignBtn}
+                activeOpacity={0.8}
+                onPress={() => setIsSignFlowOpen(false)}
+              >
+                <Text style={styles.cancelSignBtnText}>Cancel</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </KeyboardAvoidingView>
     </View>
@@ -421,7 +463,7 @@ const styles = StyleSheet.create({
     shadowRadius: 32,
     elevation: 20,
     paddingTop: 32,
-    paddingBottom: Platform.OS === "ios" ? 48 : 32,
+    paddingBottom: Platform.OS === "ios" ? 60 : 44,
     paddingHorizontal: 24,
   },
   footerInner: {
@@ -535,9 +577,24 @@ const styles = StyleSheet.create({
     elevation: 8,
     marginTop: 4,
   },
+  signBtnIdleSpacing: {
+    marginBottom: Platform.OS === "ios" ? 16 : 12,
+  },
   signedBtn: {
     backgroundColor: COLORS.success,
     shadowColor: COLORS.success,
+  },
+  cancelSignBtn: {
+    marginTop: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 44,
+  },
+  cancelSignBtnText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: COLORS.textSecondary,
+    lineHeight: 20,
   },
   signBtnText: {
     color: "#fff",
