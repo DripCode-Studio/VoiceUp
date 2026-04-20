@@ -100,6 +100,19 @@ export const CreatePetitionScreen = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [goalSignatures, setGoalSignatures] = useState("1000");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isValidImageUrl = (url: string) => {
+    if (!url.trim()) return false;
+    const normalized = url.trim().toLowerCase();
+    const isHttp =
+      normalized.startsWith("http://") || normalized.startsWith("https://");
+    const hasImageExtension = /\.(jpg|jpeg|png|webp|gif)(\?.*)?$/.test(
+      normalized,
+    );
+    return isHttp && hasImageExtension;
+  };
 
   if (!user) {
     return (
@@ -112,21 +125,45 @@ export const CreatePetitionScreen = () => {
     );
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
+    if (isSubmitting) return;
+
     if (!title.trim() || !description.trim() || !imageUrl.trim()) {
       alert("Please fill out all fields, including a cover image URL");
       return;
     }
 
-    addPetition({
-      title,
-      description,
-      imageUrl,
-      authorId: user.id || "usr_x",
-      authorName: user.name || "Anonymous User",
-    });
+    if (!isValidImageUrl(imageUrl)) {
+      alert("Please provide a valid image URL ending with jpg, jpeg, png, webp, or gif.");
+      return;
+    }
 
-    navigation.navigate("HomeTab");
+    const parsedGoal = Number.parseInt(goalSignatures, 10);
+    if (!Number.isFinite(parsedGoal) || parsedGoal < 100) {
+      alert("Goal signatures must be a number of at least 100.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      addPetition({
+        title: title.trim(),
+        description: description.trim(),
+        imageUrl: imageUrl.trim(),
+        goalSignatures: parsedGoal,
+        authorId: user.id || "usr_x",
+        authorName: user.name || "Anonymous User",
+      });
+
+      setTitle("");
+      setDescription("");
+      setImageUrl("");
+      setGoalSignatures("1000");
+
+      navigation.navigate("HomeTab");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -235,6 +272,18 @@ export const CreatePetitionScreen = () => {
               />
             </View>
 
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>SIGNATURE GOAL</Text>
+              <TextInput
+                style={[styles.input, styles.goalInput]}
+                placeholder="1000"
+                placeholderTextColor={COLORS.outline}
+                value={goalSignatures}
+                onChangeText={setGoalSignatures}
+                keyboardType="number-pad"
+              />
+            </View>
+
             {/* Tips Bento Component */}
             <View style={styles.tipsGrid}>
               <View style={styles.tipCard}>
@@ -272,12 +321,19 @@ export const CreatePetitionScreen = () => {
             {/* Primary Action */}
             <View style={styles.actionWrap}>
               <TouchableOpacity
-                style={styles.launchBtn}
+                style={[styles.launchBtn, isSubmitting && styles.launchBtnDisabled]}
                 activeOpacity={0.9}
                 onPress={handleCreate}
+                disabled={isSubmitting}
               >
-                <Text style={styles.launchBtnText}>Launch Petition</Text>
-                <MaterialIcons name="rocket-launch" size={24} color="#fff" />
+                <Text style={styles.launchBtnText}>
+                  {isSubmitting ? "Launching..." : "Launch Petition"}
+                </Text>
+                <MaterialIcons
+                  name={isSubmitting ? "hourglass-top" : "rocket-launch"}
+                  size={24}
+                  color="#fff"
+                />
               </TouchableOpacity>
               <Text style={styles.termsText}>
                 By launching, you agree to our Community Guidelines and Terms of
@@ -392,6 +448,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     lineHeight: 28,
   },
+  goalInput: {
+    fontSize: 18,
+    fontWeight: "700",
+    lineHeight: 24,
+  },
   inputHint: {
     fontSize: 14,
     fontStyle: "italic",
@@ -477,6 +538,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 20,
     elevation: 8,
+  },
+  launchBtnDisabled: {
+    opacity: 0.7,
   },
   launchBtnText: {
     color: "#fff",
