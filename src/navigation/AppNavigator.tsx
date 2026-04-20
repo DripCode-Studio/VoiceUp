@@ -34,7 +34,9 @@ const TabNavigator = () => {
           shadowOffset: { width: 0, height: -10 },
           shadowOpacity: 0.05,
           shadowRadius: 20,
-          height: 85,
+          height: 88,
+          paddingTop: 8,
+          paddingBottom: 14,
           backgroundColor: "transparent",
         },
         tabBarBackground: () => (
@@ -159,22 +161,21 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    gap: 4,
     borderRadius: 16,
-    width: 80,
+    width: 88,
+    height: 56,
   },
   activeIconContainer: {
     backgroundColor: "#eff6ff",
-    transform: [{ scale: 0.95 }],
   },
   iconLabel: {
-    fontFamily: "System", // Ideal is Inter, fallback to System if not loaded
     fontSize: 11,
     fontWeight: "600",
+    lineHeight: 14,
     textTransform: "uppercase",
     letterSpacing: 0.5,
-    marginTop: 4,
+    textAlign: "center",
   },
   activeIconLabel: {
     color: COLORS.primaryContainer,

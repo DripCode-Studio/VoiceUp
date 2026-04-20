@@ -116,10 +116,16 @@ export const HomeScreen = () => {
             <View style={styles.progressSection}>
               <View style={styles.progressHeader}>
                 <Text style={styles.progressCurrent}>
-                  {(featuredPetition?.signaturesCount ?? 85240).toLocaleString()} signatures
+                  {(
+                    featuredPetition?.signaturesCount ?? 85240
+                  ).toLocaleString()}{" "}
+                  signatures
                 </Text>
                 <Text style={styles.progressGoal}>
-                  Goal: {(featuredPetition?.goalSignatures ?? 100000).toLocaleString()}
+                  Goal:{" "}
+                  {(
+                    featuredPetition?.goalSignatures ?? 100000
+                  ).toLocaleString()}
                 </Text>
               </View>
               <View style={styles.progressBarBg}>
@@ -200,10 +206,12 @@ export const HomeScreen = () => {
                 </View>
                 <View style={styles.progressHeader}>
                   <Text style={styles.smallProgressText}>
-                    {(secondPetition?.signaturesCount ?? 4200).toLocaleString()} SIGNED
+                    {(secondPetition?.signaturesCount ?? 4200).toLocaleString()}{" "}
+                    SIGNED
                   </Text>
                   <Text style={styles.smallProgressText}>
-                    GOAL {(secondPetition?.goalSignatures ?? 10000).toLocaleString()}
+                    GOAL{" "}
+                    {(secondPetition?.goalSignatures ?? 10000).toLocaleString()}
                   </Text>
                 </View>
               </View>
@@ -254,10 +262,12 @@ export const HomeScreen = () => {
                 </View>
                 <View style={styles.progressHeader}>
                   <Text style={styles.smallProgressText}>
-                    {(thirdPetition?.signaturesCount ?? 17800).toLocaleString()} SIGNED
+                    {(thirdPetition?.signaturesCount ?? 17800).toLocaleString()}{" "}
+                    SIGNED
                   </Text>
                   <Text style={styles.smallProgressText}>
-                    GOAL {(thirdPetition?.goalSignatures ?? 25000).toLocaleString()}
+                    GOAL{" "}
+                    {(thirdPetition?.goalSignatures ?? 25000).toLocaleString()}
                   </Text>
                 </View>
               </View>
