@@ -35,7 +35,7 @@ const TabNavigator = () => {
           shadowOpacity: 0.05,
           shadowRadius: 20,
           height: 88,
-          paddingTop: 8,
+          paddingTop: 10,
           paddingBottom: 14,
           backgroundColor: "transparent",
         },
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     width: 88,
     height: 56,
+    marginTop: 4,
   },
   activeIconContainer: {
     backgroundColor: "#eff6ff",
