@@ -16,7 +16,16 @@ interface PetitionState {
     title: string,
     description: string,
     goalSignatures: number,
+    imageUrl: string,
   ) => Promise<void>;
+  addPetition: (payload: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    authorId: string;
+    authorName: string;
+    goalSignatures?: number;
+  }) => void;
   hasSigned: (petitionId: string) => boolean;
 }
 
@@ -58,6 +67,7 @@ export const usePetitionStore = create<PetitionState>((set, get) => ({
     title: string,
     description: string,
     goalSignatures: number,
+    imageUrl: string,
   ) => {
     const { petitions } = get();
     const user = useAuthStore.getState().user;
@@ -70,6 +80,7 @@ export const usePetitionStore = create<PetitionState>((set, get) => ({
       id: Math.random().toString(36).substring(7),
       title,
       description,
+      imageUrl,
       authorName: user.name,
       authorId: user.id,
       createdAt: new Date().toISOString(),
@@ -80,6 +91,34 @@ export const usePetitionStore = create<PetitionState>((set, get) => ({
     set({
       petitions: [newPetition, ...petitions],
       signedPetitionIds: [...get().signedPetitionIds, newPetition.id],
+    });
+  },
+
+  addPetition: ({
+    title,
+    description,
+    imageUrl,
+    authorId,
+    authorName,
+    goalSignatures = 1000,
+  }) => {
+    const { petitions, signedPetitionIds } = get();
+
+    const newPetition: Petition = {
+      id: `p_${Date.now()}`,
+      title,
+      description,
+      imageUrl,
+      authorName,
+      authorId,
+      createdAt: new Date().toISOString(),
+      signaturesCount: 1,
+      goalSignatures,
+    };
+
+    set({
+      petitions: [newPetition, ...petitions],
+      signedPetitionIds: [...signedPetitionIds, newPetition.id],
     });
   },
 

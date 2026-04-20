@@ -99,6 +99,7 @@ export const CreatePetitionScreen = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   if (!user) {
     return (
@@ -112,14 +113,15 @@ export const CreatePetitionScreen = () => {
   }
 
   const handleCreate = () => {
-    if (!title.trim() || !description.trim()) {
-      alert("Please fill out all fields");
+    if (!title.trim() || !description.trim() || !imageUrl.trim()) {
+      alert("Please fill out all fields, including a cover image URL");
       return;
     }
 
     addPetition({
       title,
       description,
+      imageUrl,
       authorId: user.id || "usr_x",
       authorName: user.name || "Anonymous User",
     });
@@ -187,10 +189,7 @@ export const CreatePetitionScreen = () => {
             {/* Image Placeholder */}
             <View style={styles.inputGroup}>
               <Text style={styles.inputLabel}>COVER IMAGE</Text>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.imagePlaceholder}
-              >
+              <View style={styles.imagePlaceholder}>
                 <View style={styles.imageIconWrap}>
                   <MaterialIcons
                     name="add-a-photo"
@@ -202,9 +201,24 @@ export const CreatePetitionScreen = () => {
                   Upload a compelling visual
                 </Text>
                 <Text style={styles.imagePlaceholderSub}>
-                  JPG, PNG up to 10MB
+                  Paste a direct image URL (JPG/PNG/WebP)
                 </Text>
-              </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.input}
+                placeholder="https://example.com/your-image.jpg"
+                placeholderTextColor={COLORS.outline}
+                value={imageUrl}
+                onChangeText={setImageUrl}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              {imageUrl.trim().length > 0 && (
+                <Image
+                  source={{ uri: imageUrl.trim() }}
+                  style={styles.imagePreview}
+                />
+              )}
             </View>
 
             {/* Description Section */}
@@ -396,6 +410,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 16,
+  },
+  imagePreview: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+    borderRadius: 16,
   },
   imageIconWrap: {
     width: 64,

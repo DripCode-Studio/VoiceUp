@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
   FlatList,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -42,7 +43,9 @@ export const AllPetitionsScreen = () => {
         </View>
       </View>
 
-      <Text style={styles.countText}>{allPetitions.length} campaigns available</Text>
+      <Text style={styles.countText}>
+        {allPetitions.length} campaigns available
+      </Text>
 
       <FlatList
         data={allPetitions}
@@ -59,8 +62,12 @@ export const AllPetitionsScreen = () => {
             <TouchableOpacity
               style={styles.card}
               activeOpacity={0.9}
-              onPress={() => navigation.navigate("PetitionDetails", { id: item.id })}
+              onPress={() =>
+                navigation.navigate("PetitionDetails", { id: item.id })
+              }
             >
+              <Image source={{ uri: item.imageUrl }} style={styles.cardImage} />
+
               <Text style={styles.cardTitle} numberOfLines={2}>
                 {item.title}
               </Text>
@@ -86,7 +93,9 @@ export const AllPetitionsScreen = () => {
               </View>
 
               <View style={styles.progressBg}>
-                <View style={[styles.progressFill, { width: `${progress}%` }]} />
+                <View
+                  style={[styles.progressFill, { width: `${progress}%` }]}
+                />
               </View>
             </TouchableOpacity>
           );
@@ -167,6 +176,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 12,
     elevation: 3,
+  },
+  cardImage: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+    borderRadius: 16,
+    marginBottom: 16,
   },
   cardTitle: {
     fontSize: 20,

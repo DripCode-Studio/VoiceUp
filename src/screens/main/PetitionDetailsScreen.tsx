@@ -44,6 +44,8 @@ export const PetitionDetailsScreen = () => {
   const petition = petitions.find((p) => p.id === id) || {
     id: "1",
     title: "Save the local park from development",
+    imageUrl:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80",
     description:
       "Oakwood Commons has been the heart of our community for over fifty years. It's where our children learn to ride bikes, where senior citizens find shade under century-old oaks, and where our local wildlife finds a rare sanctuary within the city limits.\n\nRecent plans submitted to the city council propose replacing 70% of this green space with a high-density luxury residential complex and a multi-level parking garage. While we recognize the need for housing, destroying one of the few remaining public parks is not the solution.\n\nThe development would not only eliminate vital recreation space but also significantly increase local traffic and put immense strain on our local drainage systems. We are calling on the City Planning Commission to reject the current proposal and designate Oakwood Commons as a protected municipal heritage site.",
     authorId: "user1",
@@ -84,7 +86,7 @@ export const PetitionDetailsScreen = () => {
         <View style={styles.heroContainer}>
           <Image
             source={{
-              uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuC6-hWgtFKk1wO2muYf9GVuTY8TzLF3Z93xnkW3Vo9a_EHBD4ZdmXhtHnA75wRz9F7HLwxTjWERaIQIIroEkqJdGNEeduQAxIatWUG3X-vHFdh91DJztzsQENx1rnf97SrUgX4V4XCCJJhxAJvuuBs9jb7O5S2LRZyeIgc5iKuiB8APJ8HVDJggbRpq__nfs1L1ZXM4VhDmhVEpsxZOJyNG7oog7lybqvr80_UQAoPckTHbmbfNJGHzVQMjRlndFFYxqTCzTQCHoaxX",
+              uri: petition.imageUrl,
             }}
             style={styles.heroImage}
           />

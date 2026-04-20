@@ -1,19 +1,18 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
+import { LoginScreen } from "../screens/auth/LoginScreen";
+import { RegisterScreen } from "../screens/auth/RegisterScreen";
+import { AllPetitionsScreen } from "../screens/main/AllPetitionsScreen";
+import { CreatePetitionScreen } from "../screens/main/CreatePetitionScreen";
+import { HomeScreen } from "../screens/main/HomeScreen";
+import { PetitionDetailsScreen } from "../screens/main/PetitionDetailsScreen";
+import { ProfileScreen } from "../screens/main/ProfileScreen";
 
-import { HomeScreen } from '../screens/main/HomeScreen';
-import { PetitionDetailsScreen } from '../screens/main/PetitionDetailsScreen';
-import { AllPetitionsScreen } from '../screens/main/AllPetitionsScreen';
-import { CreatePetitionScreen } from '../screens/main/CreatePetitionScreen';
-import { ProfileScreen } from '../screens/main/ProfileScreen';
-import { LoginScreen } from '../screens/auth/LoginScreen';
-import { RegisterScreen } from '../screens/auth/RegisterScreen';
-
-import { COLORS } from '../utils/constants';
+import { COLORS } from "../utils/constants";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,78 +24,113 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
           borderTopWidth: 0,
           elevation: 10,
-          shadowColor: '#000',
+          shadowColor: "#000",
           shadowOffset: { width: 0, height: -10 },
           shadowOpacity: 0.05,
           shadowRadius: 20,
           height: 85,
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
         },
         tabBarBackground: () => (
           <View style={styles.blurContainer}>
-             <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(255,255,255,0.95)' }]} />
+            <View
+              style={[
+                StyleSheet.absoluteFill,
+                { backgroundColor: "rgba(255,255,255,0.95)" },
+              ]}
+            />
           </View>
         ),
       }}
     >
-      <Tab.Screen 
-        name="HomeTab" 
-        component={HomeScreen} 
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
-              <MaterialIcons 
-                name="home" 
-                size={24} 
-                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer,
+              ]}
+            >
+              <MaterialIcons
+                name="home"
+                size={24}
+                color={focused ? COLORS.primaryContainer : "#94a3b8"}
               />
-              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+              <Text
+                style={[
+                  styles.iconLabel,
+                  focused ? styles.activeIconLabel : styles.inactiveIconLabel,
+                ]}
+              >
                 Home
               </Text>
             </View>
-          )
+          ),
         }}
       />
-      <Tab.Screen 
-        name="CreateTab" 
-        component={CreatePetitionScreen} 
+      <Tab.Screen
+        name="CreateTab"
+        component={CreatePetitionScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
-              <MaterialIcons 
-                name="add-circle" 
-                size={24} 
-                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer,
+              ]}
+            >
+              <MaterialIcons
+                name="add-circle"
+                size={24}
+                color={focused ? COLORS.primaryContainer : "#94a3b8"}
               />
-              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+              <Text
+                style={[
+                  styles.iconLabel,
+                  focused ? styles.activeIconLabel : styles.inactiveIconLabel,
+                ]}
+              >
                 Create
               </Text>
             </View>
-          )
+          ),
         }}
       />
-      <Tab.Screen 
-        name="ProfileTab" 
-        component={ProfileScreen} 
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={[styles.iconContainer, focused && styles.activeIconContainer]}>
-              <MaterialIcons 
-                name="person" 
-                size={24} 
-                color={focused ? COLORS.primaryContainer : '#94a3b8'} 
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer,
+              ]}
+            >
+              <MaterialIcons
+                name="person"
+                size={24}
+                color={focused ? COLORS.primaryContainer : "#94a3b8"}
               />
-              <Text style={[styles.iconLabel, focused ? styles.activeIconLabel : styles.inactiveIconLabel]}>
+              <Text
+                style={[
+                  styles.iconLabel,
+                  focused ? styles.activeIconLabel : styles.inactiveIconLabel,
+                ]}
+              >
                 Profile
               </Text>
             </View>
-          )
+          ),
         }}
       />
     </Tab.Navigator>
@@ -120,25 +154,25 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   iconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 16,
     width: 80,
   },
   activeIconContainer: {
-    backgroundColor: '#eff6ff', 
+    backgroundColor: "#eff6ff",
     transform: [{ scale: 0.95 }],
   },
   iconLabel: {
-    fontFamily: 'System', // Ideal is Inter, fallback to System if not loaded
+    fontFamily: "System", // Ideal is Inter, fallback to System if not loaded
     fontSize: 11,
-    fontWeight: '600',
-    textTransform: 'uppercase',
+    fontWeight: "600",
+    textTransform: "uppercase",
     letterSpacing: 0.5,
     marginTop: 4,
   },
@@ -146,6 +180,6 @@ const styles = StyleSheet.create({
     color: COLORS.primaryContainer,
   },
   inactiveIconLabel: {
-    color: '#94a3b8',
-  }
+    color: "#94a3b8",
+  },
 });
