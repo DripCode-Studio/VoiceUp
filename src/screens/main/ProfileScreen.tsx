@@ -253,14 +253,14 @@ export const ProfileScreen = () => {
                         style={[
                           styles.progressFill,
                           {
-                            width: `${(petition.signatureCount / petition.goal) * 100}%`,
+                            width: `${(petition.signaturesCount / petition.goal) * 100}%`,
                           },
                         ]}
                       />
                     </View>
                     <View style={styles.progressRow}>
                       <Text style={styles.cardProgressText}>
-                        {petition.signatureCount.toLocaleString()} SIGNATURES
+                        {petition.signaturesCount.toLocaleString()} SIGNATURES
                       </Text>
                       <Text style={styles.cardProgressGoal}>
                         GOAL: {petition.goal.toLocaleString()}
