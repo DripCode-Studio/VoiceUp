@@ -1,12 +1,58 @@
 export const COLORS = {
-  primary: '#1E40AF', // Blue accent
-  background: '#F9FAFB', // Light gray/white background
-  surface: '#FFFFFF', // Card backgrounds
-  text: '#111827', // Black text
-  textSecondary: '#6B7280', // Gray text
-  border: '#E5E7EB', // Light border
-  danger: '#EF4444', // Red for errors/alerts
-  success: '#10B981', // Green for success
+  tertiaryContainer: "#c7aa00",
+  primaryContainer: "#2563eb",
+  onPrimaryFixed: "#00174b",
+  background: "#f8f9ff",
+  surfaceTint: "#0053db",
+  onSecondary: "#ffffff",
+  outline: "#737686",
+  outlineVariant: "#c3c6d7",
+  onTertiaryFixed: "#221b00",
+  surfaceDim: "#d0dbed",
+  primaryFixedDim: "#b4c5ff",
+  tertiaryFixedDim: "#e6c500",
+  surfaceContainerHighest: "#d9e3f6",
+  surface: "#f8f9ff",
+  surfaceContainer: "#e6eeff",
+  surfaceContainerLowest: "#ffffff",
+  secondaryFixedDim: "#ffb4a9",
+  onErrorContainer: "#93000a",
+  tertiary: "#6e5e00",
+  onPrimary: "#ffffff",
+  surfaceVariant: "#d9e3f6",
+  onSecondaryFixed: "#410001",
+  onPrimaryContainer: "#eeefff",
+  onSecondaryContainer: "#fffbff",
+  onTertiary: "#ffffff",
+  primaryFixed: "#dbe1ff",
+  errorContainer: "#ffdad6",
+  surfaceContainerLow: "#eff4ff",
+  inversePrimary: "#b4c5ff",
+  tertiaryFixed: "#ffe25c",
+  primary: "#004ac6",
+  error: "#ba1a1a",
+  onSecondaryFixedVariant: "#930004",
+  surfaceContainerHigh: "#dee9fc",
+  onSurface: "#121c2a",
+  onBackground: "#121c2a",
+  onSurfaceVariant: "#434655",
+  onPrimaryFixedVariant: "#003ea8",
+  secondaryContainer: "#e2241c",
+  secondary: "#bc0006",
+  surfaceBright: "#f8f9ff",
+  inverseSurface: "#27313f",
+  onTertiaryContainer: "#4b3f00",
+  inverseOnSurface: "#eaf1ff",
+  onTertiaryFixedVariant: "#534600",
+  onError: "#ffffff",
+  secondaryFixed: "#ffdad5",
+  
+  // Backwards compatibility mappings for older components until refactored
+  text: "#121c2a", 
+  textSecondary: "#434655",
+  border: "#c3c6d7",
+  danger: "#ba1a1a",
+  success: "#10B981"
 };
 
 export const SPACING = {
@@ -15,6 +61,8 @@ export const SPACING = {
   md: 16,
   lg: 24,
   xl: 32,
+  xxl: 40,
+  xxxl: 48,
 };
 
 export const RADIUS = {
@@ -22,5 +70,7 @@ export const RADIUS = {
   md: 8,
   lg: 12,
   xl: 16,
+  xxl: 24,
+  xxxl: 32,
   round: 9999,
 };

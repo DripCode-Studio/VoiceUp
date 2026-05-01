@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.lg,
-    padding: SPACING.md,
+    padding: SPACING.lg,
     marginBottom: SPACING.md,
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: SPACING.sm,
+    marginBottom: SPACING.md,
   },
   authorContainer: {
     flexDirection: 'row',
@@ -72,30 +72,33 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.textSecondary,
     fontWeight: '500',
+    lineHeight: 16,
   },
   date: {
     fontSize: 12,
     color: COLORS.textSecondary,
+    lineHeight: 16,
   },
   title: {
     fontSize: 18,
     fontWeight: '700',
     color: COLORS.text,
-    marginBottom: SPACING.xs,
-    lineHeight: 24,
+    marginBottom: SPACING.sm,
+    lineHeight: 26,
   },
   description: {
     fontSize: 14,
     color: COLORS.textSecondary,
-    lineHeight: 20,
-    marginBottom: SPACING.md,
+    lineHeight: 22,
+    marginBottom: SPACING.lg,
   },
   progressSection: {
-    marginTop: 'auto',
+    marginTop: 8,
   },
   progressHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: SPACING.xs,
   },
   signatures: {
@@ -104,8 +107,7 @@ const styles = StyleSheet.create({
   },
   signaturesHighlight: {
     fontWeight: '700',
-    color: COLORS.primary,
-  },
+    color: COLORS.primary,  },  },
   goal: {
     fontSize: 14,
     color: COLORS.textSecondary,
