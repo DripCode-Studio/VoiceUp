@@ -36,6 +36,17 @@ VoiceUp is a modern mobile petition platform built with React Native and Firebas
 
 ---
 
+## 📸 Screenshots
+
+| | |
+|:---:|:---:|
+| <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.27.11.png" width="250"> | <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.27.42.png" width="250"> |
+| <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.27.49.png" width="250"> | <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.28.33.png" width="250"> |
+| <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.28.56.png" width="250"> | <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.29.13.png" width="250"> |
+| <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.30.34.png" width="250"> | <img src="src/screenshots/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-05-01%20at%2011.30.49.png" width="250"> |
+
+---
+
 ## 🎯 Goal
 
 VoiceUp aims to simplify civic engagement by making it easy for anyone to raise awareness, gather support, and drive change — all in a clean and intuitive mobile experience.
